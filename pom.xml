@@ -6,6 +6,7 @@
     <groupId>com.yejf</groupId>
     <artifactId>uc</artifactId>
     <version>1.0.0</version>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
@@ -56,6 +57,14 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <warSourceDirectory>${basedir}/web</warSourceDirectory>
+                </configuration>
+              </plugin>
         </plugins>
     </build>
 </project>
