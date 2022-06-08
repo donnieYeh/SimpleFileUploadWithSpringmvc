@@ -4,13 +4,23 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <context:component-scan base-package="com.yejf.uc.controller"/>
-    <mvc:annotation-driven/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <bean name="methodValidationPostProcessor"
+          class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+    <mvc:annotation-driven>
+        <!--see https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-config-message-converters-->
+<!--        <mvc:message-converters>-->
+<!--            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
+<!--            </bean>-->
+<!--        </mvc:message-converters>-->
+    </mvc:annotation-driven>
     <mvc:resources mapping="/page/**" location="/page/"/>
     <bean name="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
