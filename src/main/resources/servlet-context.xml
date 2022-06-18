@@ -5,22 +5,17 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+        https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
 
-    <context:component-scan base-package="com.yejf.uc.controller"/>
+    <context:component-scan base-package="com.yejf.web.controller"/>
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     <bean name="methodValidationPostProcessor"
           class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
-    <mvc:annotation-driven>
-        <!--see https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-config-message-converters-->
-<!--        <mvc:message-converters>-->
-<!--            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
-<!--            </bean>-->
-<!--        </mvc:message-converters>-->
-    </mvc:annotation-driven>
+    <mvc:annotation-driven/>
     <mvc:resources mapping="/page/**" location="/page/"/>
     <bean name="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -33,5 +28,18 @@
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="suffix" value=".html"/>
         <property name="prefix" value="/page/"/>
+    </bean>
+
+    <!--持久层相关-->
+    <mybatis:scan base-package="com.yejf.web.dao" />
+    <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="tencentDatasource"/>
+        <property name="mapperLocations" value="classpath:mapper/**/*.xml"/>
+    </bean>
+    <bean id="tencentDatasource" class="com.zaxxer.hikari.HikariDataSource">
+        <constructor-arg name="configuration" ref="hikariConfig"/>
+    </bean>
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <constructor-arg name="propertyFileName" value="/hikari.properties"/>
     </bean>
 </beans>
