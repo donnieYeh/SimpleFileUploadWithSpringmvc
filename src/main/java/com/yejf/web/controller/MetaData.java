@@ -1,4 +1,4 @@
-package com.yejf.uc.controller;
+package com.yejf.web.controller;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

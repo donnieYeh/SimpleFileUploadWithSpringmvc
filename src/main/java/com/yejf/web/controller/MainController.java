@@ -1,6 +1,6 @@
-package com.yejf.uc.controller;
+package com.yejf.web.controller;
 
-import com.yejf.uc.service.HelloService;
+import com.yejf.web.service.HelloService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
